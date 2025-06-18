@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Сенсорный Мир - Образовательная платформа для родителей детей с аутизмом</title>
+    <meta name="description" content="Образовательные курсы ABA-терапии и библиотека PECS для родителей детей с аутизмом. Поддержка русского, чеченского и татарского языков." />
+    <meta name="keywords" content="аутизм, ABA терапия, PECS, образование, родители, дети, коммуникация, развитие">
+    <meta name="author" content="Сенсорный Мир">
+    <meta name="robots" content="index, follow">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a90a4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Сенсорный Мир">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon-180x180.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Сенсорный Мир - Образовательная платформа для родителей детей с аутизмом" />
+    <meta property="og:description" content="Изучайте ABA-терапию и используйте PECS карточки. Бесплатная платформа с поддержкой трех языков." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sensorny-mir.com" />
+    <meta property="og:site_name" content="Сенсорный Мир" />
+    <meta property="og:image" content="https://sensorny-mir.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ru_RU" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Сенсорный Мир - Образовательная платформа">
+    <meta name="twitter:description" content="ABA-терапия и PECS для родителей детей с аутизмом">
+    <meta name="twitter:image" content="https://sensorny-mir.com/twitter-image.jpg">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; 
+                   script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+                   style-src 'self' 'unsafe-inline';
+                   img-src 'self' data: https:;
+                   font-src 'self' https:;
+                   connect-src 'self' https:;">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/main.jsx" as="script">
+    <link rel="preload" href="/src/App.css" as="style">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    
+    <!-- Google Analytics - Replace with your actual GA4 ID -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR-ACTUAL-ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YOUR-ACTUAL-ID');
+    </script> -->
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Сенсорный Мир",
+      "description": "Образовательная платформа для родителей детей с аутизмом",
+      "url": "https://sensorny-mir.com",
+      "courseMode": "online",
+      "educationalLevel": "beginner",
+      "teaches": ["ABA терапия", "PECS коммуникация", "работа с аутизмом"],
+      "availableLanguage": ["ru", "ce", "tt"],
+      "isAccessibleForFree": true,
+      "educationalUse": "instruction",
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "parent"
+      }
+    }
+    </script>
+  </head>
+  <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

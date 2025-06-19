@@ -1,64 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { 
-  BookOpen, 
-  Image, 
-  MessageCircle, 
-  ArrowRight,
-  Heart,
-  Users,
-  Target,
-  Lightbulb
-} from 'lucide-react';
+import { BookOpen, Image, MessageCircle, Heart, Users, Target, Lightbulb } from 'lucide-react';
 
-const FeatureCard = ({ icon: Icon, title, description, link, linkText }) => {
-  return (
-    <div className="card-autism-friendly group hover:scale-105 transition-transform">
-      <div className="flex items-center space-x-4 mb-4">
-        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg flex items-center justify-center">
-          <Icon className="w-6 h-6 text-white" />
-        </div>
-        <h3 className="text-xl font-bold text-high-contrast">{title}</h3>
-      </div>
-      
-      <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-        {description}
-      </p>
-      
-      <Link
-        to={link}
-        className="btn-primary flex items-center justify-center space-x-2 w-full text-white no-underline"
-      >
-        <span>{linkText}</span>
-        <ArrowRight className="w-4 h-4" />
-      </Link>
-    </div>
-  );
-};
-
-const StatCard = ({ icon: Icon, number, label, color = "blue" }) => {
-  const colorClasses = {
-    blue: "from-blue-500 to-blue-600",
-    green: "from-green-500 to-green-600",
-    purple: "from-purple-500 to-purple-600",
-    orange: "from-orange-500 to-orange-600"
-  };
-  
-  return (
-    <div className="card-autism-friendly text-center">
-      <div className={`w-16 h-16 bg-gradient-to-r ${colorClasses[color]} rounded-full flex items-center justify-center mx-auto mb-4`}>
-        <Icon className="w-8 h-8 text-white" />
-      </div>
-      <div className="text-3xl font-bold text-high-contrast mb-2">{number}</div>
-      <div className="text-gray-600 dark:text-gray-300">{label}</div>
-    </div>
-  );
-};
+// Наши новые, независимые компоненты
+import FeatureCard from './FeatureCard';
+import StatCard from './StatCard';
 
 const HomePage = () => {
   const { t } = useTranslation();
-  
+
   const features = [
     {
       icon: BookOpen,
@@ -82,10 +33,9 @@ const HomePage = () => {
       linkText: t('join_forum')
     }
   ];
-  
+
   return (
     <div className="min-h-screen bg-calm">
-      
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16">
@@ -115,7 +65,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Stats Section */}
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
@@ -144,7 +94,7 @@ const HomePage = () => {
             color="orange"
           />
         </div>
-        
+
         {/* Features Section */}
         <div className="mb-16">
           <div className="text-center mb-12">
@@ -155,14 +105,14 @@ const HomePage = () => {
               {t('platform_description')}
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <FeatureCard key={index} {...feature} />
             ))}
           </div>
         </div>
-        
+
         {/* Benefits Section */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 md:p-12">
           <div className="text-center mb-12">
@@ -170,7 +120,7 @@ const HomePage = () => {
               {t('why_choose_us')}
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -185,7 +135,7 @@ const HomePage = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Users className="w-6 h-6 text-green-600" />
@@ -199,7 +149,7 @@ const HomePage = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Lightbulb className="w-6 h-6 text-purple-600" />
@@ -213,7 +163,7 @@ const HomePage = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Heart className="w-6 h-6 text-orange-600" />

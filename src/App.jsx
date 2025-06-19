@@ -8,8 +8,6 @@ import ErrorFallback from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useDarkMode } from './hooks/useDarkMode';
-import './App.css';
-
 // Lazy load components for better performance
 const HomePage = lazy(() => import('./components/HomePage'));
 const Courses = lazy(() => import('./components/Courses'));

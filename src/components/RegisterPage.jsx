@@ -195,7 +195,7 @@ const RegisterPage = () => {
           </div>
 
           {error && (
-            <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 text-sm">
+            <div role="alert" className="flex items-center space-x-2 text-red-600 dark:text-red-400 text-sm">
               <AlertCircle className="h-4 w-4" />
               <span>{error}</span>
             </div>

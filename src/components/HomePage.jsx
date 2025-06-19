@@ -85,6 +85,7 @@ const HomePage = () => {
   
   return (
     <div className="min-h-screen bg-calm">
+      
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16">
@@ -234,4 +235,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

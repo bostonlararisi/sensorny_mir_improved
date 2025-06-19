@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
@@ -23,7 +24,6 @@ const Navigation = ({ darkMode, toggleDarkMode }) => {
   const location = useLocation();
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navigationItems = [
@@ -46,7 +46,6 @@ const Navigation = ({ darkMode, toggleDarkMode }) => {
 
   const changeLanguage = (langCode) => {
     i18n.changeLanguage(langCode);
-    setIsLanguageMenuOpen(false);
   };
 
   const handleLogout = () => {
@@ -93,32 +92,36 @@ const Navigation = ({ darkMode, toggleDarkMode }) => {
 
           {/* Controls */}
           <div className="flex items-center space-x-2">
-            {/* Language Selector */}
-            <div className="relative">
-              <button
-                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Выбрать язык"
-              >
-                <Globe className="w-5 h-5" />
-              </button>
-              
-              {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => changeLanguage(lang.code)}
-                      className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors first:rounded-t-lg last:rounded-b-lg ${
-                        i18n.language === lang.code ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : ''
-                      }`}
-                    >
-                      {lang.name}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+{/* Language Selector (with Radix UI) */}
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger asChild> 
+    <button
+      className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      aria-label="Выбрать язык"
+    >
+      <Globe className="w-5 h-5" />
+    </button>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Portal>
+    <DropdownMenu.Content 
+      className="w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+      sideOffset={5}
+    >
+      {languages.map((lang) => (
+        <DropdownMenu.Item
+          key={lang.code}
+          onSelect={() => changeLanguage(lang.code)}
+          className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors first:rounded-t-lg last:rounded-b-lg outline-none cursor-pointer ${
+            i18n.language === lang.code ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : ''
+          }`}
+        >
+          {lang.name}
+        </DropdownMenu.Item>
+      ))}
+    </DropdownMenu.Content>
+  </DropdownMenu.Portal>
+</DropdownMenu.Root>
 
             {/* Dark Mode Toggle */}
             <button
@@ -195,10 +198,11 @@ const Navigation = ({ darkMode, toggleDarkMode }) => {
 
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Открыть меню"
-            >
+  onClick={() => setIsMenuOpen(!isMenuOpen)}
+  className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+  aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
+>
+            
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
@@ -263,15 +267,14 @@ const Navigation = ({ darkMode, toggleDarkMode }) => {
       </div>
 
       {/* Click outside to close menus */}
-      {(isLanguageMenuOpen || isUserMenuOpen) && (
-        <div 
-          className="fixed inset-0 z-40" 
-          onClick={() => {
-            setIsLanguageMenuOpen(false);
-            setIsUserMenuOpen(false);
-          }}
-        />
-      )}
+{(isUserMenuOpen) && (
+  <div 
+    className="fixed inset-0 z-40" 
+    onClick={() => {
+      setIsUserMenuOpen(false);
+    }}
+  />
+)}
     </nav>
   );
 };

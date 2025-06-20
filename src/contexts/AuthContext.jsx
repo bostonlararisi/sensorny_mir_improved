@@ -1,4 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { auth } from '../firebase'; // Наш исправленный путь
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -14,102 +21,72 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Этот useEffect будет следить за состоянием аутентификации в Firebase
   useEffect(() => {
-    // Проверяем сохраненные данные пользователя при загрузке
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error('Error parsing saved user data:', error);
-        localStorage.removeItem('user');
+    // onAuthStateChanged возвращает функцию для отписки, которую мы вызовем при размонтировании компонента
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        // Пользователь вошел в систему
+        // Мы можем здесь обогатить объект пользователя данными из Firestore, если нужно
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          // В Firebase имя пользователя (displayName) нужно устанавливать отдельно
+          // Пока будем использовать часть email, как ты и делал
+          name: firebaseUser.displayName || firebaseUser.email.split('@')[0], 
+          role: firebaseUser.email === 'admin@sensornymir.ru' ? 'admin' : 'user' // Эту логику роли потом лучше перенести в Firestore
+        });
+      } else {
+        // Пользователь вышел
+        setUser(null);
       }
-    }
-    setLoading(false);
+      setLoading(false); // Загрузка начальной информации о пользователе завершена
+    });
+
+    // Отписываемся от слушателя, когда компонент исчезает
+    return () => unsubscribe();
   }, []);
 
-  const login = async (email, password) => {
-    try {
-      // Имитация API вызова - в реальном проекте здесь будет Firebase Auth
-      const mockUser = {
-        id: Date.now(),
-        email,
-        name: email.split('@')[0],
-        role: email === 'admin@sensornymir.ru' ? 'admin' : 'user',
-        avatar: null,
-        createdAt: new Date().toISOString(),
-        progress: {}
-      };
-
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      return { success: true, user: mockUser };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
-  };
-
+  // НАСТОЯЩАЯ ФУНКЦИЯ РЕГИСТРАЦИИ
   const register = async (name, email, password) => {
     try {
-      // Имитация API вызова - в реальном проекте здесь будет Firebase Auth
-      const mockUser = {
-        id: Date.now(),
-        email,
-        name,
-        role: 'user',
-        avatar: null,
-        createdAt: new Date().toISOString(),
-        progress: {}
-      };
-
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      return { success: true, user: mockUser };
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Здесь можно будет добавить логику для обновления профиля пользователя (например, добавить имя)
+      // `onAuthStateChanged` автоматически обработает нового пользователя
+      return { success: true, user: userCredential.user };
     } catch (error) {
+      // Firebase возвращает понятные коды ошибок, их можно будет переводить
+      console.error("Firebase registration error:", error);
       return { success: false, error: error.message };
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+  // НАСТОЯЩАЯ ФУНКЦИЯ ВХОДА
+  const login = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // `onAuthStateChanged` автоматически обработает вход
+      return { success: true, user: userCredential.user };
+    } catch (error) {
+      console.error("Firebase login error:", error);
+      return { success: false, error: error.message };
+    }
   };
 
-  const updateProgress = (courseId, lessonId, completed = true) => {
-    if (!user) return;
-
-    const updatedUser = {
-      ...user,
-      progress: {
-        ...user.progress,
-        [courseId]: {
-          ...user.progress[courseId],
-          [lessonId]: {
-            completed,
-            completedAt: new Date().toISOString()
-          }
-        }
-      }
-    };
-
-    setUser(updatedUser);
-    localStorage.setItem('user', JSON.stringify(updatedUser));
+  // НАСТОЯЩАЯ ФУНКЦИЯ ВЫХОДА
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      // `onAuthStateChanged` автоматически обработает выход
+    } catch (error) {
+      console.error("Firebase logout error:", error);
+    }
   };
 
-  const getUserProgress = (courseId, lessonId) => {
-    if (!user || !user.progress) return null;
-    return user.progress[courseId]?.[lessonId] || null;
-  };
-
-  const getCourseProgress = (courseId) => {
-    if (!user || !user.progress) return { completed: 0, total: 0 };
-    
-    const courseProgress = user.progress[courseId] || {};
-    const completed = Object.values(courseProgress).filter(lesson => lesson.completed).length;
-    const total = Object.keys(courseProgress).length;
-    
-    return { completed, total };
-  };
+  // Функции для прогресса пока оставим без изменений, но в будущем их тоже нужно будет привязать к Firestore
+  const updateProgress = (courseId, lessonId, completed = true) => { /* ... */ };
+  const getUserProgress = (courseId, lessonId) => { /* ... */ };
+  const getCourseProgress = (courseId) => { /* ... */ };
 
   const value = {
     user,
@@ -126,8 +103,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-

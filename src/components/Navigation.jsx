@@ -24,12 +24,11 @@ const Navigation = ({ darkMode, toggleDarkMode }) => {
   const location = useLocation();
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigationItems = [
-    { path: '/', label: 'home', icon: Home },
-    { path: '/courses', label: 'courses', icon: BookOpen },
-    { path: '/pecs', label: 'pecs', icon: Image },
-    { path: '/forum', label: 'forum', icon: MessageCircle }
-  ];
+const navigationItems = [
+  { path: '/', label: 'home', icon: Home },
+  { path: '/courses', label: 'courses', icon: BookOpen },
+  { path: '/forum', label: 'forum', icon: MessageCircle }
+];
 
   // Добавляем админ панель для администраторов
   if (isAdmin) {

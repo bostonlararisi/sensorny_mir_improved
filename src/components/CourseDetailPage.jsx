@@ -2,17 +2,13 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { coursesData } from '../data/siteData';
+import { ArrowRight, Book } from 'lucide-react';
 
 const CourseDetailPage = () => {
   const { t } = useTranslation();
-  // useParams - это хук из React Router, который "читает" динамическую часть URL.
-  // В нашем случае, он найдет :courseId в пути и вернет его значение.
   const { courseId } = useParams();
-
-  // Находим данные для нашего конкретного курса по courseId
   const course = coursesData.find(c => c.id === courseId);
 
-  // Если курс по такому ID не найден, можно показать сообщение об ошибке.
   if (!course) {
     return (
       <div className="text-center py-12">
@@ -36,11 +32,31 @@ const CourseDetailPage = () => {
           </p>
         </div>
 
-        {/* Здесь скоро будет список уроков для этого курса */}
-        <div className="text-center text-gray-500 p-8 border-2 border-dashed rounded-lg">
-          <p>Содержимое для уроков курса '{t(course.title)}' появится здесь...</p>
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold text-high-contrast mb-6">Уроки курса:</h2>
+          <div className="space-y-4">
+            {course.lessons.map((lesson, index) => (
+              <Link
+                key={lesson.id}
+                // ВОТ ИСПРАВЛЕННАЯ СТРОКА: правильные обратные кавычки и чистое содержимое
+                to={`/courses/${course.id}/lessons/${lesson.id}`}
+                className="card-autism-friendly flex items-center justify-between p-4 group hover:border-blue-500 dark:hover:border-blue-500"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                    <Book className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Урок {index + 1}</p>
+                    <p className="font-bold text-high-contrast">{t(lesson.title)}</p>
+                  </div>
+                </div>
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+              </Link>
+            ))}
+          </div>
         </div>
-
+        
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ export const coursesData = [
     icon: '🧠',
     difficulty: 'beginner',
     estimatedTime: 420, // 7 уроков по 60 минут
+    evidenceLevel: 5,
     lessons: [
       {
         id: 'abc-model',
@@ -207,6 +208,7 @@ export const coursesData = [
     icon: '🖼️',
     difficulty: 'beginner',
     estimatedTime: 240, // 4 урока по 60 минут
+    evidenceLevel: 3,
     lessons: [
       {
         id: 'phase-1',
@@ -334,6 +336,7 @@ export const coursesData = [
     icon: '🖐️',
     difficulty: 'beginner',
     estimatedTime: 300, // 5 уроков по 60 минут
+    evidenceLevel: 2,
     lessons: [
       {
         id: 'sensory-diet',
@@ -459,6 +462,7 @@ export const coursesData = [
     icon: '🗓️',
     difficulty: 'beginner',
     estimatedTime: 240, // 4 урока по 60 минут
+    evidenceLevel: 2,
     lessons: [
       {
         id: 'visual-schedules',
@@ -566,6 +570,7 @@ export const coursesData = [
     icon: '📖',
     difficulty: 'beginner',
     estimatedTime: 120, // 2 урока по 60 минут
+    evidenceLevel: 2,
     lessons: [
       {
         id: 'writing-social-stories',
@@ -627,6 +632,7 @@ export const coursesData = [
     icon: '🧸',
     difficulty: 'beginner',
     estimatedTime: 180, // 3 урока по 60 минут
+    evidenceLevel: 4,
     lessons: [
       {
         id: 'esdm-philosophy',
@@ -703,6 +709,77 @@ export const coursesData = [
         ]
       }
     ]
+  },
+  // --- НОВЫЕ МЕТОДИКИ ---
+  {
+    id: 'fct',
+    title: 'fct_training',
+    description: 'fct_desc',
+    icon: '🗣️',
+    difficulty: 'intermediate',
+    estimatedTime: 180,
+    evidenceLevel: 4,
+    lessons: []
+  },
+  {
+    id: 'cbt',
+    title: 'cbt_for_anxiety',
+    description: 'cbt_desc',
+    icon: '🧘',
+    difficulty: 'intermediate',
+    estimatedTime: 300,
+    evidenceLevel: 4,
+    lessons: []
+  },
+  {
+    id: 'video',
+    title: 'video_modeling',
+    description: 'video_desc',
+    icon: '🎬',
+    difficulty: 'beginner',
+    estimatedTime: 90,
+    evidenceLevel: 3,
+    lessons: []
+  },
+  {
+    id: 'prt',
+    title: 'prt_training',
+    description: 'prt_desc',
+    icon: '🎲',
+    difficulty: 'intermediate',
+    estimatedTime: 240,
+    evidenceLevel: 3,
+    lessons: []
+  },
+  {
+    id: 'parent_mediated',
+    title: 'parent_mediated',
+    description: 'parent_mediated_desc',
+    icon: '👨‍👩‍👧',
+    difficulty: 'beginner',
+    estimatedTime: 120,
+    evidenceLevel: 3,
+    lessons: []
+  },
+  {
+    id: 'dir_floortime',
+    title: 'dir_floortime',
+    description: 'dir_floortime_desc',
+    icon: '🧩',
+    difficulty: 'intermediate',
+    estimatedTime: 300,
+    evidenceLevel: 2,
+    lessons: []
+  },
+  {
+    id: 'music_therapy',
+    title: 'music_therapy',
+    description: 'music_therapy_desc',
+    icon: '🎵',
+    difficulty: 'beginner',
+    estimatedTime: 120,
+    evidenceLevel: 2,
+    lessons: []
   }
 ];
 

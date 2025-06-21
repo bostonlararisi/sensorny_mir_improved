@@ -605,4 +605,7 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
 }
-
+.btn-primary-outline {
+  @apply block w-full p-3 text-left text-base font-medium rounded-lg border-2 border-white/50 text-white/90;
+  @apply hover:bg-white/20 hover:border-white/80 transition-all duration-200;
+}

@@ -2,63 +2,71 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { coursesData } from '../data/siteData';
-import { 
-  Users, 
-  Target, 
-  Lightbulb,
+import {
   ClipboardCheck,
-  Globe
 } from 'lucide-react';
 
 const HomePage = () => {
   const { t } = useTranslation();
 
-  // --- НАЧАЛО НОВОЙ ЛОГИКИ ГРУППИРОВКИ ---
+  // --- НОВАЯ СТРУКТУРА КАТЕГОРИЙ ---
   const categories = [
     {
-      title: 'Поведенческие и структурные подходы',
-      ids: ['aba', 'teacch']
+      title: 'Прикладной анализ поведения (ABA)',
+      ids: ['aba', 'fct', 'prt']
     },
     {
-      title: 'Развитие коммуникации и социума',
-      ids: ['pecs', 'social']
+      title: 'Развивающие и игровые подходы',
+      ids: ['esdm', 'dir_floortime', 'jasper']
     },
     {
-      title: 'Игровые и сенсорные методики',
-      ids: ['si', 'esdm']
+      title: 'Коммуникация и социальные навыки',
+      ids: ['hanen_mtw', 'pecs', 'social_stories', 'social_skills_groups']
+    },
+    {
+      title: 'Дополнительные и поддерживающие методы',
+      ids: ['cbt', 'teacch', 'video', 'parent_mediated', 'sensory_integration', 'music_therapy', 'mindfulness', 'telehealth']
     }
   ];
 
   const getCourseById = (id) => coursesData.find(c => c.id === id);
-  // --- КОНЕЦ НОВОЙ ЛОГИКИ ГРУППИРОВКИ ---
-  
+
   return (
     <div className="min-h-screen bg-calm">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+          
+          {/* --- ИЗМЕНЕННЫЙ БЛОК --- */}
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              {t('welcome_description')}
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+              {t('hero_title')}
             </h1>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-white/80">
-              Начните с выбора наиболее актуального для вас направления или пройдите тест, чтобы получить рекомендацию.
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-white/80">
+              {t('hero_subtitle')}
             </p>
           </div>
 
-          {/* --- НАЧАЛО НОВОГО СТРУКТУРИРОВАННОГО БЛОКА МЕТОДИК --- */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+          {/* --- НОВЫЙ БЛОК ДЛЯ ЛОГОТИПА --- */}
+          <div className="mt-10 mb-4 flex justify-center">
+            <div className="w-40 h-40 bg-white/10 rounded-full flex items-center justify-center border-2 border-white/20">
+              <span className="text-white/50 text-lg">Лого</span>
+            </div>
+          </div>
+          {/* --- КОНЕЦ НОВОГО БЛОКА --- */}
+
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
             {categories.map(category => (
-              <div key={category.title} className="bg-white/10 p-6 rounded-2xl">
-                <h3 className="font-bold text-white border-b border-white/20 pb-3 mb-4">{category.title}</h3>
+              <div key={category.title} className="bg-white/10 p-5 rounded-xl">
+                <h3 className="font-bold text-white border-b border-white/20 pb-3 mb-4 text-lg">{category.title}</h3>
                 <div className="space-y-3">
                   {category.ids.map(id => {
                     const course = getCourseById(id);
                     if (!course) return null;
                     return (
                       <Link key={course.id} to={`/courses/${course.id}`} className="btn-primary-outline">
-                        <span className="text-xl mr-3">{course.icon}</span>
                         <span>{t(course.title)}</span>
+                        <span className="text-xl ml-2">{course.icon}</span> 
                       </Link>
                     );
                   })}
@@ -66,10 +74,8 @@ const HomePage = () => {
               </div>
             ))}
           </div>
-          {/* --- КОНЕЦ НОВОГО БЛОКА МЕТОДИК --- */}
-          
-          {/* Блок для теста */}
-          <div className="mt-12 pt-8 border-t border-white/20 text-center">
+
+          <div className="mt-16 pt-8 border-t border-white/20 text-center">
             <p className="mb-3 text-white/90">
               Не уверены, с чего начать?
             </p>
@@ -85,39 +91,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Ключевые преимущества */}
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="text-center p-4">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Target className="w-8 h-8 text-blue-600" />
-            </div>
-            <h3 className="text-lg font-bold text-high-contrast mb-1">Научная обоснованность</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Все методики основаны на доказательной практике.</p>
-          </div>
-          <div className="text-center p-4">
-            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lightbulb className="w-8 h-8 text-purple-600" />
-            </div>
-            <h3 className="text-lg font-bold text-high-contrast mb-1">Практические инструменты</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Готовые к использованию материалы и методики.</p>
-          </div>
-          <div className="text-center p-4">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Users className="w-8 h-8 text-green-600" />
-            </div>
-            <h3 className="text-lg font-bold text-high-contrast mb-1">Поддержка сообщества</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Общайтесь и делитесь опытом на нашем форуме.</p>
-          </div>
-          <div className="text-center p-4">
-            <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Globe className="w-8 h-8 text-orange-600" />
-            </div>
-            <h3 className="text-lg font-bold text-high-contrast mb-1">Мультиязычность</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Поддержка языков малых народов России.</p>
-          </div>
-        </div>
-      </div>
+      <div className="h-24 bg-calm"></div>
     </div>
   );
 };

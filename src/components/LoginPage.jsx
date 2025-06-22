@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { translateFirebaseError } from '../utils/firebaseErrorMessages';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ const LoginPage = () => {
     if (result.success) {
       navigate(from, { replace: true });
     } else {
-      setError(result.error || 'Ошибка входа в систему');
+      setError(translateFirebaseError(result.error || ''));
     }
     
     setLoading(false);
@@ -171,4 +172,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

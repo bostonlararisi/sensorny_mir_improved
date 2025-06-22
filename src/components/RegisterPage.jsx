@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { translateFirebaseError } from '../utils/firebaseErrorMessages';
 
 const RegisterPage = () => {
   const { t } = useTranslation();
@@ -57,7 +58,7 @@ const RegisterPage = () => {
     if (result.success) {
       navigate('/');
     } else {
-      setError(result.error || 'Ошибка регистрации');
+      setError(translateFirebaseError(result.error || ''));
     }
     
     setLoading(false);
@@ -228,4 +229,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-

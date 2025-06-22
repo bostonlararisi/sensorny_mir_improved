@@ -13,7 +13,7 @@ import { useDarkMode } from './hooks/useDarkMode';
 // Lazy load components for better performance
 const HomePage = lazy(() => import('./components/HomePage'));
 const Courses = lazy(() => import('./components/Courses'));
-const CourseDetailPage = lazy(() => import('./components/CourseDetailPage')); // <--- ДОБАВЛЕНО
+const CourseDetailPage = lazy(() => import('./components/CourseDetailPage'));
 const LessonPage = lazy(() => import('./components/LessonPage'));
 const PecsLibrary = lazy(() => import('./components/PecsLibrary'));
 const LoginPage = lazy(() => import('./components/LoginPage'));
@@ -21,6 +21,7 @@ const RegisterPage = lazy(() => import('./components/RegisterPage'));
 const ProfilePage = lazy(() => import('./components/ProfilePage'));
 const ForumPage = lazy(() => import('./components/ForumPage'));
 const AdminPage = lazy(() => import('./components/AdminPage'));
+const ForgotPasswordPage = lazy(() => import('./components/ForgotPassword')); // <-- добавлено
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -58,12 +59,13 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/courses" element={<Courses />} />
-                <Route path="/courses/:courseId" element={<CourseDetailPage />} /> {/* <--- ДОБАВЛЕНО */}
+                <Route path="/courses/:courseId" element={<CourseDetailPage />} />
                 <Route path="/courses/:courseId/lessons/:lessonId" element={<LessonPage />} />
                 <Route path="/pecs" element={<PecsLibrary />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} /> {/* <-- добавлено */}
+
                 {/* Protected Routes */}
                 <Route 
                   path="/profile" 
